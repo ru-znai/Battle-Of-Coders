@@ -6,17 +6,21 @@ app = Flask(__name__)
 test_cases_even_or_odd = [[[1, 2], 2], [[2, 4], 8], [[-1, 6], -6]]
 
 
-def get_next_row_from_database(current_id, stat=0):
-    conn = sqlite3.connect('baza/database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT name, description, function_name FROM tasks WHERE id > ? ORDER BY id LIMIT 1', (current_id,))
-    row = cursor.fetchone()
-    conn.close()
-    return row
+def get_next_row_from_database(current_id, stat=True):
+    if stat:
+        conn = sqlite3.connect('base/database.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT name, description, function_name, test FROM tasks WHERE id > ? ORDER BY id LIMIT 1',
+                       (current_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return row
+    else:
+        return None
 
 
 def get_db_connection_lvl():
-    conn = sqlite3.connect('baza/database.db')
+    conn = sqlite3.connect('base/database.db')
     cursor = conn.cursor()
     cursor.execute("SELECT lvl FROM users WHERE id = ?", (1,))
     current_user_lvl = cursor.fetchone()[0]
@@ -25,7 +29,7 @@ def get_db_connection_lvl():
 
 
 def write_db_lvl(lvl_new):
-    conn = sqlite3.connect('baza/database.db')
+    conn = sqlite3.connect('base/database.db')
     cursor = conn.cursor()
     cursor.execute("UPDATE users SET lvl =? WHERE id = ?", (lvl_new, 1))
     conn.commit()
@@ -43,12 +47,12 @@ def index():
 
     current_user_lvl = get_db_connection_lvl()
 
-
     if result and False not in result:
         current_user_lvl += 1
         write_db_lvl(current_user_lvl)
 
-    data = get_next_row_from_database(current_user_lvl)
+    data = get_next_row_from_database(current_user_lvl, False)
+
     return render_template('description.html', data=data, current_user_lvl=current_user_lvl)
 
 
