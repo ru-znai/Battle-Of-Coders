@@ -6,76 +6,103 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/3024-night.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
-<style>
-            body {
-                background-color: #eee;
-            }
 
-        .logo {
-            position: fixed;
-            top: 20px; /* Расположение сверху */
-            right: 20px; /* Расположение справа */
-            width: 100px; /* Ширина логотипа */
-            height: auto; /* Автоматическая высота */
-            z-index: 1000; /* Позиция по оси Z, чтобы логотип был поверх других элементов */
+    <style>
+                body {
+            background-color: #000; /* черный цвет фона */
+            color: #fff; /* белый цвет текста */
+            font-family: Arial, sans-serif; /* выбор шрифта */
+            margin: 0; /* убираем отступы по умолчанию */
+            padding: 0; /* убираем отступы по умолчанию */
         }
 
         .container {
             display: flex;
             align-items: stretch;
-            margin-bottom: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* тень с белым оттенком */
+            background-color: #222; /* темно-серый цвет фона контейнера */
         }
+
         .user-info {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 20%;
-            padding: 10px;
-            background-color: #f0f0f0;
+            padding: 20px;
+            background-color: #333; /* темно-серый цвет фона блока с информацией о пользователе */
         }
+
         .task {
             flex: 1;
-            padding: 10px;
-            background-color: #f9f9f9;
+            padding: 20px;
+            overflow-y: auto;
         }
+
         .solution {
             flex: 1;
-            padding: 10px;
-            background-color: #fff;
+            padding: 20px;
+            background-color: #444; /* серый цвет фона блока с решением */
         }
+
         #code {
-            height: calc(100% - 40px); /* Высота поля ввода уменьшена на высоту .user-info */
+            height: calc(100% - 40px);
             width: 100%;
+            color: #fff; /* белый цвет текста в поле с кодом */
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
+
 </head>
 <body>
-    <h1>USER LVL: {{ current_user_lvl }}</h1>
-
-    <div id="tasks-container">
-        <div class="container">
-
-            <div class="task">
-                {% if data %}
-                    <h3>  {{ data[0] }} </h3>
-                {% else %}
-                    <p>The tasks are over.</p>
-                {% endif %}
-                <textarea id="text" rows="10" cols="50">{{ data[1] }}</textarea>
-            </div>
-            <div class="solution">
-                <div id="result"></div>
-
-                    <form action="/" method="post">
-                        <textarea name="code" id="code"></textarea>
-                        <input type="hidden" name="current_id" value="{{ next_id }}">
-                        <button type="submit">Проверить</button>
-                    </form>
-                </div>
-        </div>
+    <div class="logo">
+        <img src="logo.png" alt="Logo" width="100">
     </div>
 
+    <h1>USER LVL: {{ current_user_lvl }}</h1>
+
+    <div id="tasks-container" class="container">
+        <div class="user-info">
+            <h2>User Info</h2>
+            <p>Name: {{ user_name }}</p>
+            <p>Email: {{ user_email }}</p>
+            <!-- Другие данные пользователя -->
+        </div>
+
+        <div class="task">
+            {% if data %}
+                <h3>{{ data[0] }}</h3>
+                <p>{{ data[1] }}</p>
+            {% else %}
+                <p>The tasks are over.</p>
+            {% endif %}
+        </div>
+
+        <div class="solution">
+            <h2>Solution</h2>
+            <form action="/" method="post">
+                <textarea readonly="readonly" name="code" id="code"></textarea>
+                <input type="hidden" name="current_id" value="{{ next_id }}">
+                <button type="submit">Check</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -83,11 +110,9 @@
             mode: "python",
             theme: "3024-night"
         });
-        var defaultText = "{{ data[2] }}";
-            editor.setValue(defaultText);
 
+        var defaultCode = "{{ data[2] }}";
+        editor.setValue(defaultCode);
     </script>
-
-
 </body>
 </html>

@@ -51,10 +51,17 @@ def index():
         current_user_lvl += 1
         write_db_lvl(current_user_lvl)
 
-    data = get_next_row_from_database(current_user_lvl, False)
+    data = get_next_row_from_database(current_user_lvl)
 
     return render_template('description.html', data=data, current_user_lvl=current_user_lvl)
 
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/intro', methods=['POST', 'GET'])
+def intro():
+    return render_template('intro.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
