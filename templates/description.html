@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/3024-night.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
+<style>
+            body {
+                background-color: #eee;
+            }
+
+        .logo {
+            position: fixed;
+            top: 20px; /* Расположение сверху */
+            right: 20px; /* Расположение справа */
+            width: 100px; /* Ширина логотипа */
+            height: auto; /* Автоматическая высота */
+            z-index: 1000; /* Позиция по оси Z, чтобы логотип был поверх других элементов */
+        }
+
+        .container {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 20%;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .task {
+            flex: 1;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .solution {
+            flex: 1;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #code {
+            height: calc(100% - 40px); /* Высота поля ввода уменьшена на высоту .user-info */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>USER LVL: {{ current_user_lvl }}</h1>
+
+    <div id="tasks-container">
+        <div class="container">
+
+            <div class="task">
+                {% if data %}
+                    <h3>  {{ data[0] }} </h3>
+                {% else %}
+                    <p>The tasks are over.</p>
+                {% endif %}
+                <textarea id="text" rows="10" cols="50">{{ data[1] }}</textarea>
+            </div>
+            <div class="solution">
+                <div id="result"></div>
+
+                    <form action="/" method="post">
+                        <textarea name="code" id="code"></textarea>
+                        <input type="hidden" name="current_id" value="{{ next_id }}">
+                        <button type="submit">Проверить</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "3024-night"
+        });
+        var defaultText = "{{ data[2] }}";
+            editor.setValue(defaultText);
+
+    </script>
+
+
+</body>
+</html>
