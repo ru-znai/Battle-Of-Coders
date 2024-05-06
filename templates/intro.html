@@ -13,6 +13,9 @@
         <div id="popupContainer" class="popup-container">
             <!-- Здесь будут отображаться всплывающие надписи -->
         </div>
+        <a href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='play.png') }}" alt="Play Button" class="play-button">
+        </a>
     </div>
 
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>

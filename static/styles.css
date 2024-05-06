@@ -118,3 +118,13 @@ button {
     font-size: 16px;
 }
 
+/* Пример стилей для уменьшения размера изображения */
+.play-button {
+    width: 65px;
+    height: 65px;
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
