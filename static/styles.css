@@ -82,3 +82,39 @@ button:hover {
 .popup-text.show {
     top: 20px;
 }
+
+/* Styles for Popup Window */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000; /* Выше всех остальных элементов */
+    color: #fff; /* Белый текст */
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Additional Styling */
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
