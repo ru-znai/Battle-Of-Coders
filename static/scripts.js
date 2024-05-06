@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Список текстов для всплывающих надписей
     const hints = [
-        "First hint message",
-        "Second hint message",
-        "Third hint message"
+        "МЕЧТАЙ",
+        "ПОЗНАВАЙ",
+        "СОЗДАВАЙ"
     ];
 
     // Функция для создания и отображения всплывающих надписей

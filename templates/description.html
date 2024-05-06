@@ -67,25 +67,111 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .text-display {
+            flex: 1;
+            padding: 20px;
+            background-color: #333; /* Темно-серый цвет фона блока */
+            border-radius: 8px;
+            overflow-y: auto; /* Разрешить прокрутку, если содержимое не помещается */
+            color: #fff; /* Белый цвет текста */
+        }
+
+        .text-display h2 {
+            color: #fff; /* Белый цвет заголовка */
+            font-size: 1.5em; /* Размер шрифта заголовка */
+            margin-bottom: 15px; /* Отступ снизу для заголовка */
+        }
+
+        .text-display textarea {
+            width: 100%; /* Занимать всю доступную ширину */
+            height: 300px; /* Фиксированная высота textarea */
+            padding: 10px; /* Отступы внутри textarea */
+            box-sizing: border-box; /* Учитывать padding в расчете размера элемента */
+            border: 1px solid #666; /* Подводить тонкую обводку вокруг textarea */
+            border-radius: 5px; /* Закругление углов textarea */
+            background-color: #444; /* Серый цвет фона textarea */
+            color: #fff; /* Белый цвет текста в textarea */
+            resize: vertical; /* Разрешить вертикальное изменение размера textarea */
+            font-family: Arial, sans-serif; /* Выбор шрифта для текста */
+            font-size: 1em; /* Размер шрифта */
+        }
+#text-display-container {
+    border: 1px solid #67b04b; /* Цвет и толщина обводки */
+    border-radius: 8px; /* Закругление углов обводки */
+
+}
+.text-sm {
+    font-size: .875rem !important;
+    line-height: 1.25rem !important;
+}
+.font-bold {
+    font-weight: 700 !important;
+}
+.task-heading {
+    background-color: #67b04b; /* Цвет фона подложки */
+    color: #fff; /* Белый цвет текста */
+    padding: 10px; /* Отступы внутри элемента */
+    border-radius: 3px; /* Закругление углов */
+    margin-bottom: 5px; /* Отступ снизу */
+}
+
+/* Стили для обводки с отступом */
+.bordered {
+    border: 1px solid #67b04b; /* Цвет и толщина обводки */
+    padding: 0px; /* Отступ внутри элемента */
+    border-radius: 8px; /* Закругление углов обводки */
+    margin-bottom: 0px; /* Отступ снизу для элемента */
+}
+.circle-container {
+    position: relative;
+    text-align: center;
+}
+
+.circle-img {
+    width: 200px; /* Размер круглой фотографии */
+    height: 200px; /* Размер круглой фотографии */
+    border-radius: 50%; /* Делаем изображение круглым */
+    object-fit: cover; /* Растягиваем изображение в круге */
+    border: 4px solid #fff; /* Белая обводка */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
+.caption {
+    position: absolute;
+    bottom: 10px; /* Расстояние от нижнего края */
+    left: 50%; /* Выравнивание по центру */
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+    padding: 5px 10px; /* Внутренние отступы */
+    border-radius: 20px; /* Закругленные углы */
+    font-size: 14px; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
     </style>
 
 </head>
 <body>
-    <div class="logo">
-        <img src="logo.png" alt="Logo" width="100">
-    </div>
+<!--    <div class="logo">-->
+<!--        <img src="logo.png" alt="Logo" width="100">-->
+<!--    </div>-->
 
-    <h1>USER LVL: {{ current_user_lvl }}</h1>
 
-    <div id="tasks-container" class="container">
-        <div class="user-info">
+
+        <div class="container bordered"><br></div>
+        <div class="container bordered">
+        <div class="user-info" >
             <h2>User Info</h2>
             <p>Name: {{ user_name }}</p>
-            <p>Email: {{ user_email }}</p>
+            <p>solutions: {{ current_user_lvl }}</p>
             <!-- Другие данные пользователя -->
         </div>
 
         <div class="task">
+            <div class="task-heading text-sm font-bold">Task</div>
+
             {% if data %}
                 <h3>{{ data[0] }}</h3>
                 <p>{{ data[1] }}</p>
@@ -95,13 +181,32 @@
         </div>
 
         <div class="solution">
-            <h2>Solution</h2>
+            <div class="task-heading text-sm font-bold">Solution</div>
+
             <form action="/" method="post">
                 <textarea readonly="readonly" name="code" id="code"></textarea>
                 <input type="hidden" name="current_id" value="{{ next_id }}">
                 <button type="submit">Check</button>
             </form>
         </div>
+    </div>
+
+    <div class="container bordered"><br></div>
+
+
+    <div class="container" id="text-display-container">
+
+
+        <div class="text-display">
+            <h2>Code analysis</h2>
+<!--             <div class="circle-container">-->
+<!--                 <img src="{{ url_for('static', filename='young-teacher3.jpg') }}" alt="Фото" class="circle-img">-->
+<!--                 <div class="caption">Анастасия Снежинская</div>-->
+<!--            </div>-->
+<!--            <div class="task-heading text-sm font-bold">Code analysis</div>-->
+
+            <p>{{ advice[1] }}</p>
+    </div>
     </div>
 
     <script>

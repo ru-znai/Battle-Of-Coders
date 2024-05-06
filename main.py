@@ -40,7 +40,7 @@ def write_db_lvl(lvl_new):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     result = []
-
+    advice = []
     if request.method == 'POST':
         code_user = request.form['code']
         created_function = files.create_function_from_text(code_user)
@@ -49,12 +49,18 @@ def index():
     current_user_lvl = get_db_connection_lvl()
 
     if result and False not in result:
+
         current_user_lvl += 1
         write_db_lvl(current_user_lvl)
+    elif result and False in result:
+
+        advice.append(['Не плохо, но еще можно лучше!'])
+
+        advice.append(code_user)
 
     data = get_next_row_from_database(current_user_lvl)
 
-    return render_template('description.html', data=data, current_user_lvl=current_user_lvl)
+    return render_template('description.html', data=data, current_user_lvl=current_user_lvl, advice=advice)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
