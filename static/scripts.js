@@ -29,3 +29,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Запускаем функцию показа всплывающих надписей при загрузке страницы
     showHints();
 });
+
+
